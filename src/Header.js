@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import logo from './assets/logo.png'
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -11,7 +10,7 @@ const Header = () => {
         <Container>
             <HeaderLogo>
                 <Link to="/">
-                <picture><img src={logo} alt="logo"/></picture>
+                <picture><img src={"https://mikekitko.com/wp-content/uploads/2019/10/amazon-logo-white-768x232.png"} alt="logo"/></picture>
                 </Link>
             </HeaderLogo>
             <HeaderOptionAddress>

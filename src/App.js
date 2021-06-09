@@ -4,11 +4,12 @@ import './App.css';
 import Cart from './Cart';
 import Header from './Header';
 import Home from './Home';
+import styled from 'styled-components'
 
 function App() {
   return (
       <Router>
-    <div >
+    <Container>
       <Header />
       <Switch>
           <Route path="/cart">
@@ -18,9 +19,12 @@ function App() {
           <Home/>
           </Route>
       </Switch>
-    </div>
+    </Container>
       </Router>
   );
 }
 
 export default App;
+const Container = styled.div`
+background-color: hsl(0, 0%, 91.8%);
+`
