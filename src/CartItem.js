@@ -1,24 +1,33 @@
 import React from 'react'
 import styled from 'styled-components'
-import { db } from './firebase';
-const CartItem = ({ id, item }) => {
-    let options = [];
+import { db } from './firebase'
 
-    for (let i = 1; i < Math.max(item.quantity + 1, 20); i++){
-        options.push(<option value={i}>Qty:{i}</option>)
+const CartItem = ({ id, item }) => {
+
+    const deleteItem = (event) => {
+        event.preventDefault()
+        db.collection('cartItems').doc(id).delete();
     }
+
+
+    let options = []
+
+    for (let i = 1; i < Math.max(item.quantity + 1, 20); i++) {
+        options.push(<option value={i}> Qty: {i}</option>)
+    }
+
     const changeQuantity = (newQuantity) => {
-        console.log(newQuantity);
-         db.collection('cartItems').doc(id).update({
+        db.collection('cartItems').doc(id).update({
             quantity: parseInt(newQuantity)
         })
-    
-}
+    }
+
     return (
         <Container>
             <ImageContainer>
-                <img src={item.image} alt="the product"/>
+                <img src={item.image} alt="product"/>
             </ImageContainer>
+
             <CartItemInfo>
                 <CartItemInfoTop>
                     <h2>{item.name}</h2>
@@ -27,17 +36,20 @@ const CartItem = ({ id, item }) => {
                     <CartItemQuantityContainer>
                         <select
                             value={item.quantity}
-                            onChange={(e)=>changeQuantity(e.target.value)}
-                        >{options}
-                            
-                      </select>
-                        
+                            onChange={(event) => changeQuantity(event.target.value)}
+                        >
+                            {options}
+                        </select>
                     </CartItemQuantityContainer>
-                    <CartItemDeleteContainer>Delete</CartItemDeleteContainer>
+                    <CartItemDeleteContainer
+                        onClick={deleteItem}
+                    >
+                        Delete
+                    </CartItemDeleteContainer>
                 </CartItemInfoBottom>
             </CartItemInfo>
             <CartItemPrice>
-                {item.price}
+                ${item.price}
             </CartItemPrice>
         </Container>
     )

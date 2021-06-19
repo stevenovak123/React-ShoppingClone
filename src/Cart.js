@@ -8,8 +8,7 @@ const Cart = ({ cartItems }) => {
         let total = 0;
         cartItems.forEach((item) => {
         total+=(item.product.price * item.product.quantity)
-            
-        });
+      })
         return total
     }
     const getCount =()=> {
@@ -25,7 +24,7 @@ const Cart = ({ cartItems }) => {
     return (
         <Container>
             <CartItems cartItems={cartItems}/>
-            <CartTotal getCount={getCount} total={getTotalPrice }/>
+            <CartTotal getCount={getCount} getTotalPrice={getTotalPrice }/>
         </Container>
     )
 }

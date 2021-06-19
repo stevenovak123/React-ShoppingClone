@@ -1,62 +1,78 @@
 import React from 'react'
 import styled from 'styled-components'
 import SearchIcon from '@material-ui/icons/Search';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import { Link } from 'react-router-dom';
-const Header = ({ cartItems }) => {
+import {
+    Link
+} from "react-router-dom";
 
+function Header({ cartItems, user, signOut }) {
 
-   const getCount =()=> {
-       let count = 0;
-    //loop through all items
-    console.log(cartItems)
-      cartItems.forEach((item) => {
-    count += item.product.quantity;
-      })
-       return count
+    const getCount = () => {
+        let count = 0;
+        // Loop through all cart items
+        cartItems.forEach((item) => {
+            // add the quantity of the cart item to tota;
+            count += item.product.quantity;
+        })
+
+        return count;
     }
+
+    
+
+
     return (
-        
         <Container>
             <HeaderLogo>
                 <Link to="/">
-                <picture><img src={"https://mikekitko.com/wp-content/uploads/2019/10/amazon-logo-white-768x232.png"} alt="logo"/></picture>
+                    <img src={"https://i.imgur.com/7I9Was5.png"} alt="logo" />
                 </Link>
             </HeaderLogo>
+
             <HeaderOptionAddress>
                 <LocationOnIcon />
                 <HeaderOption>
                     <OptionLineOne>Hello</OptionLineOne>
-                    <OptionLineTwo>Select your Address</OptionLineTwo>
+                    <OptionLineTwo>Select Your Address</OptionLineTwo>
                 </HeaderOption>
             </HeaderOptionAddress>
+
             <HeaderSearch>
-                <HeaderSearchInput type="text"></HeaderSearchInput>
+                <HeaderSearchInput type='text' />
+
                 <HeaderSearchIconContainer>
-                    <SearchIcon/>
+                    <SearchIcon />
                 </HeaderSearchIconContainer>
             </HeaderSearch>
+
             <HeaderNavItems>
-                <HeaderOption>
-                    <OptionLineOne>Hello,Steve</OptionLineOne>
-                    <OptionLineTwo>Account & lists</OptionLineTwo>
+
+                <HeaderOption onClick={signOut}>
+                    <OptionLineOne>Hello, {user.name}</OptionLineOne>
+                    <OptionLineTwo>Account & Lists</OptionLineTwo>
                 </HeaderOption>
+
                 <HeaderOption>
                     <OptionLineOne>Returns</OptionLineOne>
-                    <OptionLineTwo>&Orders</OptionLineTwo>
+                    <OptionLineTwo>& Orders</OptionLineTwo>
                 </HeaderOption>
+
+
                 <HeaderOptionCart>
                     <Link to="/cart">
-                    <ShoppingCartIcon />
+                        <ShoppingBasketIcon />
                         <CartCount>{getCount()}</CartCount>
                     </Link>
                 </HeaderOptionCart>
+
             </HeaderNavItems>
+
         </Container>
-        
     )
 }
+
 
 export default Header
 
