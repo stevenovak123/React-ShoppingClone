@@ -1,20 +1,49 @@
 import React from 'react'
 import styled from 'styled-components'
-const Product = () => {
+import {db} from './firebase'
+const Product = ({ title, price, rating, image, id }) => {
+    
+    const addToCart = () => {
+        const cartItem = db.collection("cartItems").doc(id);
+        cartItem.get().then((doc) => {
+            if (doc.exists) {
+                cartItem.update({
+                    quantity:doc.data().quantity+1
+                })
+            } else {
+                db.collection("cartItems").doc(id).set({
+                    name: title,
+                    image: image,
+                    price: price,
+                    quantity: 1
+                })
+            }
+            
+        })
+    }
+
+
+
     return (
         <Container>
             <Title>
-                Imac
+                {title}
             </Title>
             <Price>
-                $1499
+                ${price}
             </Price>
             <Rating>
-            ⭐⭐⭐⭐⭐
+                {
+                    Array(rating).fill().map(rating=><p>⭐</p>)
+                }
             </Rating>
-            <Image src='https://images-na.ssl-images-amazon.com/images/I/81SGb5l%2BlZL._AC_SX342_.jpg' />
+            <Image src={image} />
             <ActionDiv>
-            <AddToCartButton>Add to Cart</AddToCartButton>
+                <AddToCartButton
+                onClick={addToCart}
+                >
+                    Add to Cart
+                </AddToCartButton>
             </ActionDiv>
         </Container>
     )
@@ -41,7 +70,10 @@ const Price = styled.span`
  margin-top: 0.2rem;
  
  `
-const Rating = styled.div``
+const Rating = styled.div`
+    display: flex;
+    align-items: center;
+`
 const Image = styled.img`
 max-height:15rem;
 object-fit: contain;
@@ -59,4 +91,5 @@ height: 2rem;
 background-color: hsl(42.9, 84.6%, 61.8%);
 border: 2px solid hsl(42.9, 52.7%, 43.2%);
 border-radius: 2px;
+cursor: pointer;
 `

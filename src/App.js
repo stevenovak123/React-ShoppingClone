@@ -5,15 +5,29 @@ import Cart from './Cart';
 import Header from './Header';
 import Home from './Home';
 import styled from 'styled-components'
-
+import { useEffect, useState } from 'react';
+import {db} from './firebase'
 function App() {
+  const [cartItems, setCartItems] = useState([]);
+  const getCartItems = () => {
+    db.collection('cartItems').onSnapshot((snapshot) => {
+      const tempItems = snapshot.docs.map((doc) => ({
+        product: doc.data()
+      }))
+      setCartItems(tempItems);
+    })
+  }
+  useEffect(() => {
+    getCartItems();
+  },[])
+  
   return (
       <Router>
     <Container>
-      <Header />
+      <Header cartItems={cartItems} />
       <Switch>
           <Route path="/cart">
-      <Cart />
+            <Cart cartItems={cartItems} key={cartItems.id}/>
           </Route>
           <Route path="/">
           <Home/>

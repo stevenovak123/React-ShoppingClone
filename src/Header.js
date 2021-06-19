@@ -4,7 +4,18 @@ import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { Link } from 'react-router-dom';
-const Header = () => {
+const Header = ({ cartItems }) => {
+
+
+   const getCount =()=> {
+       let count = 0;
+    //loop through all items
+    console.log(cartItems)
+      cartItems.forEach((item) => {
+    count += item.product.quantity;
+      })
+       return count
+    }
     return (
         
         <Container>
@@ -38,7 +49,7 @@ const Header = () => {
                 <HeaderOptionCart>
                     <Link to="/cart">
                     <ShoppingCartIcon />
-                    <CartCount>5</CartCount>
+                        <CartCount>{getCount()}</CartCount>
                     </Link>
                 </HeaderOptionCart>
             </HeaderNavItems>
